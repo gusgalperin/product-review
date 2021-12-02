@@ -7,7 +7,7 @@ class AddProduct {
     }
 
     do = async ({ category, name, brand }) => {
-        const product = new Product(category, name, brand)
+        const product = new Product(category, brand, name)
         await this.products.add(product)
         return product
     }

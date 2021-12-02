@@ -4,6 +4,7 @@ class ProductSummary {
         this.category = product.category
         this.name = product.name
         this.brand = product.brand
+        this.active = product.active
         this.stars = 0
 
         if(reviews){

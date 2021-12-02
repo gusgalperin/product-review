@@ -6,6 +6,19 @@ class Product {
         this.category = category
         this.brand = brand
         this.name = name
+        this.active = true
+    }
+
+    static set(other){
+        let p = new Product(other.category, other.brand, other.name)
+        p.id = other.id
+        p.active = other.active
+
+        return p
+    }
+
+    delete(){
+        this.active = false
     }
 }
 export default Product

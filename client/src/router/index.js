@@ -1,11 +1,20 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import AddReview from "../views/AddReview";
+
+Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/product/:id/review',
+    name: 'Review',
+    component: AddReview
   },
   {
     path: '/about',
@@ -17,8 +26,9 @@ const routes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes
 })
 

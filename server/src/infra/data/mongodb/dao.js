@@ -1,6 +1,7 @@
 import Client from "./client.js";
 import {MONGO_DB_NAME} from "../../../config.js";
 import NotFoundError from "../../../core/exceptions/notFoundError.js";
+import Product from "../../../core/entities/product.js";
 
 class Dao {
     constructor(collectionName) {
@@ -26,7 +27,14 @@ class Dao {
         if(!doc)
             throw new NotFoundError(`${this.collectionName} --> '${id}' not found`)
 
-        return doc
+        return Product.set(doc)
+    }
+
+    update = async (doc) => {
+        const filter = { id: doc.id };
+        const options = { upsert: true };
+
+        await this.collection.updateOne(filter, { $set: doc }, options);
     }
 }
 
