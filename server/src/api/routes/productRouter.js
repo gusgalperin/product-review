@@ -5,6 +5,7 @@ import AddReview from "../../core/useCases/addReview.js";
 import DeleteProduct from "../../core/useCases/deleteProduct.js";
 import EditProduct from "../../core/useCases/editProduct.js";
 import GetProductDetail from "../../core/useCases/getProductDetail.js";
+import GetTopProductsList from "../../core/useCases/getTopProductsList.js";
 
 const router = Router()
 
@@ -62,6 +63,19 @@ router.put('/:id', async (req, res, next) => {
         body.id = req.params.id
 
         const p = await cu.do(body)
+
+        res.send(p)
+    }
+    catch (err){
+        next(err)
+    }
+})
+
+router.get('/chart/top', async (req, res, next) => {
+    try {
+        const cu = new GetTopProductsList()
+
+        const p = await cu.do()
 
         res.send(p)
     }

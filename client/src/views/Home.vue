@@ -13,6 +13,9 @@ export default {
   name: 'Home',
   components: {
     DataTable
+  },
+  created () {
+    document.title = 'product-review';
   }
 }
 </script>

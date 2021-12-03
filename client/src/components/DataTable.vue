@@ -56,17 +56,7 @@
               {{ data.item.brand }}
             </template>
             <template #cell(stars)="data">
-              <div>
-                <b-input-group>
-                  <b-form-rating id="rating-inline" inline :value="data.item.stars" disabled show-value></b-form-rating>
-                  <b-input-group-append>
-                    <b-input-group-text class="justify-content-center" style="min-width: 3em;">
-                      {{ data.item.ratesCount }}
-                    </b-input-group-text>
-                  </b-input-group-append>
-                </b-input-group>
-
-              </div>
+              <read-only-stars :stars="data.item.stars" :starsCount="data.item.ratesCount"></read-only-stars>
             </template>
             <template #cell(status)="data">
               <b-icon-bookmark-check-fill
@@ -78,7 +68,7 @@
                 v-else
               ></b-icon-bookmark-x-fill>
             </template>
-            <template #cell(actions)="data">
+            <template #cell(acciones)="data">
               <b-row>
                 <b-col cols="3">
                   <b-icon-box-arrow-in-right
@@ -87,21 +77,21 @@
                       @click="productDetail(data.item.id)"
                   ></b-icon-box-arrow-in-right>
                 </b-col>
-                <b-col cols="3">
+                <b-col cols="3" v-if="data.item.active === true">
                   <b-icon-pencil-square
                     class="action-item"
                     variant="primary"
                     @click="getRowData(data.item.id)"
                   ></b-icon-pencil-square>
                 </b-col>
-                <b-col cols="3">
+                <b-col cols="3" v-if="data.item.active === true">
                   <b-icon-cart-plus-fill
                       class="action-item"
                       variant="primary"
                       @click="addReview(data.item.id)"
                   ></b-icon-cart-plus-fill>
                 </b-col>
-                <b-col cols="3">
+                <b-col cols="3" v-if="data.item.active === true">
                   <b-icon-trash-fill
                       class="action-item"
                       variant="danger"
@@ -169,13 +159,15 @@
   import CreateProductForm from "@/components/CreateProductForm.vue"
   import EditProductForm from "@/components/EditProductForm.vue"
   import DeleteProductModal from "@/components/DeleteProductModal.vue"
+  import ReadOnlyStars from "./ReadOnlyStars";
 
   export default {
     components:{
       ProductOverview,
       CreateProductForm,
       EditProductForm,
-      DeleteProductModal
+      DeleteProductModal,
+      ReadOnlyStars
     },
     data() {
       return {
@@ -205,7 +197,7 @@
             label:"Status",
             sortable: false
           },
-          "actions",
+          "acciones",
         ],
         items: [],
         numberOfProducts: 0,

@@ -3,7 +3,7 @@
     <header-bar></header-bar>
     <b-container>
       <b-row class="mt-5">
-        <router-view />
+        <router-view></router-view>
       </b-row>
     </b-container>
   </div>

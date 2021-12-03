@@ -17,7 +17,6 @@
     data () {
       return {
         options: [
-          { value: null, text: 'Categoría' },
           { value: 'Electro', text: 'Electro'},
           { value: 'Hogar', text: 'Hogar'},
           { value: 'Jardin', text: 'Jardin'}

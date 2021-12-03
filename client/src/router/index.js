@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AddReview from "../views/AddReview";
 import ProductDetail from "../views/ProductDetail";
+import TopProducts from "../views/TopProducts";
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     name: 'Detail',
     component: ProductDetail,
     props: true,
+  },
+  {
+    path: '/product/top/ranking',
+    name: 'Ranking',
+    component: TopProducts
   },
   {
     path: '/about',

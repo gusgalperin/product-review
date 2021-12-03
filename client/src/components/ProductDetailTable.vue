@@ -16,12 +16,7 @@
       {{ data.item.price }}
     </template>
     <template #cell(stars)="data">
-      <div>
-        <b-input-group>
-          <b-form-rating id="rating-inline" inline :value="data.item.stars" disabled show-value></b-form-rating>
-        </b-input-group>
-
-      </div>
+      <read-only-stars :stars="data.item.stars" :showCount="false"></read-only-stars>
     </template>
     <template #cell(comment)="data">
       {{ data.item.comment }}
@@ -30,8 +25,12 @@
 </template>
 
 <script>
+  import ReadOnlyStars from "./ReadOnlyStars";
   export default {
     name: "ProductDetailTable",
+    components: {
+      ReadOnlyStars
+    },
     props: {
       reviews: Array
     },

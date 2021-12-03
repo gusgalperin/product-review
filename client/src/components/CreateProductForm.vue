@@ -1,34 +1,7 @@
 <template>
   <b-form class="mt-3">
-    <b-row>
-      <b-col cols="4">
-        <b-form-group id="category" label="Categoria" label-for="category">
-          <category-list-input name="category" :value="product.category" v-model="product.category"></category-list-input>
-        </b-form-group>
-      </b-col>
 
-      <b-col cols="4">
-        <b-form-group id="name" label="Nombre" label-for="name">
-          <b-form-input
-            id="name"
-            type="text"
-            placeholder="Nombre"
-            v-model="product.name"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col cols="4">
-        <b-form-group id="brand" label="Marca" label-for="brand">
-          <b-form-input
-              id="brand"
-              type="text"
-              placeholder="Marca"
-              v-model="product.brand"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
-
-    </b-row>
+    <product-form :product="product"></product-form>
 
     <b-row class="mt-4">
       <b-col cols="3">
@@ -44,11 +17,11 @@
 
 <script>
 import axios from 'axios'
-import CategoryListInput from "./CategoryListInput";
+import ProductForm from "./ProductForm";
 export default {
   name: "CreateProductForm",
   components: {
-    CategoryListInput
+    ProductForm
   },
   data () {
     return {

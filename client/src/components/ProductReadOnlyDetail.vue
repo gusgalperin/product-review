@@ -36,17 +36,7 @@
     </b-col>
     <b-col cols="3">
       <b-form-group id="stars" label="Rating" label-for="stars">
-      <div>
-        <b-input-group>
-          <b-form-rating id="rating-inline" inline :value="product.stars" disabled show-value></b-form-rating>
-          <b-input-group-append>
-            <b-input-group-text class="justify-content-center" style="min-width: 3em;">
-              {{ product.ratesCount }}
-            </b-input-group-text>
-          </b-input-group-append>
-        </b-input-group>
-      </div>
-
+        <read-only-stars :stars="product.stars" :starsCount="product.ratesCount"></read-only-stars>
       </b-form-group>
     </b-col>
 
@@ -54,8 +44,12 @@
 </template>
 
 <script>
+import ReadOnlyStars from "./ReadOnlyStars";
 export default {
   name: "ProductReadOnlyDetail",
+  components: {
+    ReadOnlyStars
+  },
   props: {
     product: Object
   }
