@@ -9,7 +9,7 @@
     <b-row>
       <product-overview
         :totalProducts="numberOfProducts"
-        :activeProducts="activeProducts"
+        :activeProducts="numberOfActiveProducts"
         @totalProductsIsActive="setFilterTotalIsActive"
         @activeProductsIsActive="setFilterActiveIsActive"
       ></product-overview>
@@ -114,7 +114,6 @@
     >
       <create-product-form
         @closeCreateModal="closeCreateModal"
-        @reloadDataTable="getProductData"
         @showSuccessAlert="showAlertCreate"
       ></create-product-form>
     </b-modal>
@@ -128,7 +127,6 @@
     >
       <edit-product-form
         @closeEditModal="closeEditModal"
-        @reloadDataTable="getProductData"
         @showSuccessAlert="showAlertUpdate"
         :productId="productId"
       ></edit-product-form>
@@ -144,7 +142,6 @@
     >
       <delete-product-modal
         @closeDeleteModal="closeDeleteModal"
-        @reloadDataTable="getProductData"
         @showDeleteAlert="showDeleteSuccessModal"
         :productId="productId"
       ></delete-product-modal>
@@ -160,6 +157,8 @@
   import EditProductForm from "@/components/EditProductForm.vue"
   import DeleteProductModal from "@/components/DeleteProductModal.vue"
   import ReadOnlyStars from "./ReadOnlyStars";
+
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     components:{
@@ -200,9 +199,6 @@
           "acciones",
         ],
         items: [],
-        numberOfProducts: 0,
-        activeProducts: 0,
-        activeProductsData: [],
         productId: 0,
         nameSearchTerm: "",
         tableHeader: "",
@@ -210,32 +206,28 @@
         alertMessage: ""
       }
     },
-    mounted() {
-      this.getProductData()
+    async mounted() {
+      await this.fetchProducts()
+      this.setFilterTotalIsActive()
+    },
+    computed: {
+      ...mapGetters({
+        products: 'products/products',
+        numberOfProducts: 'products/numberOfProducts',
+        activeProducts: 'products/activeProducts',
+        numberOfActiveProducts: 'products/numberOfActiveProducts'
+      })
     },
     methods:{
+      ...mapActions({
+        fetchProducts: 'products/fetchProducts'
+      }),
       showCreateModal(){
         console.log(this.$refs)
         this.$refs["create-product-modal"].show()
       },
       closeCreateModal(){
         this.$refs["create-product-modal"].hide()
-      },
-      getProductData() {
-        axios
-          .get("http://localhost:8010/api/products/")
-          .then((response) => {
-            this.tableHeader = "Todos los Productos"
-            this.items = response.data
-            this.numberOfProducts = response.data.length
-            this.activeProductsData = response.data.filter ((p) => {
-              return p.active === true
-            })
-            this.activeProducts = this.activeProductsData.length
-          })
-          .catch((err) => {
-            console.log(err)
-          })
       },
       getRowData(id) {
         this.$refs["edit-product-modal"].show()
@@ -246,11 +238,11 @@
       },
       setFilterTotalIsActive() {
         this.tableHeader = "Todos los Productos"
-        this.getProductData()
+        this.items = this.products
       },
       setFilterActiveIsActive() {
         this.tableHeader = "Productos activos"
-        this.items = this.activeProductsData
+        this.items = this.activeProducts
       },
       showAlertCreate() {
         this.showSuccessAlert = true
