@@ -17,6 +17,12 @@ class Product {
         return p
     }
 
+    update(name, brand, category){
+        this.name = name
+        this.brand = brand
+        this.category = category
+    }
+
     delete(){
         this.active = false
     }

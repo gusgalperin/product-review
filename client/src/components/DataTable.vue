@@ -57,7 +57,15 @@
             </template>
             <template #cell(stars)="data">
               <div>
-                <b-form-rating id="rating-inline" inline :value="data.item.stars" disabled show-value></b-form-rating>
+                <b-input-group>
+                  <b-form-rating id="rating-inline" inline :value="data.item.stars" disabled show-value></b-form-rating>
+                  <b-input-group-append>
+                    <b-input-group-text class="justify-content-center" style="min-width: 3em;">
+                      {{ data.item.ratesCount }}
+                    </b-input-group-text>
+                  </b-input-group-append>
+                </b-input-group>
+
               </div>
             </template>
             <template #cell(status)="data">
@@ -72,14 +80,21 @@
             </template>
             <template #cell(actions)="data">
               <b-row>
-                <b-col cols="7">
+                <b-col cols="4">
                   <b-icon-pencil-square
                     class="action-item"
                     variant="primary"
                     @click="getRowData(data.item.id)"
                   ></b-icon-pencil-square>
                 </b-col>
-                <b-col cols="1">
+                <b-col cols="3">
+                  <b-icon-cart-plus-fill
+                      class="action-item"
+                      variant="primary"
+                      @click="addReview(data.item.id)"
+                  ></b-icon-cart-plus-fill>
+                </b-col>
+                <b-col cols="3">
                   <b-icon-trash-fill
                       class="action-item"
                       variant="danger"
@@ -256,6 +271,9 @@
       showDeleteSuccessModal() {
         this.showSuccessAlert = true
         this.alertMessage = "Producto eliminado"
+      },
+      addReview(id) {
+        this.$router.push({name: 'Review', params: {productId: id}})
       }
     },
     name: "DataTable"

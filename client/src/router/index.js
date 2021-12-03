@@ -12,9 +12,10 @@ const routes = [
     component: Home
   },
   {
-    path: '/product/:id/review',
+    path: '/product/:productId/review',
     name: 'Review',
-    component: AddReview
+    component: AddReview,
+    props: true,
   },
   {
     path: '/about',

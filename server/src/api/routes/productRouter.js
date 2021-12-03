@@ -4,6 +4,7 @@ import AddProduct from "../../core/useCases/addProduct.js";
 import AddReview from "../../core/useCases/addReview.js";
 import DaoProducts from "../../infra/data/mongodb/daoProducts.js";
 import DeleteProduct from "../../core/useCases/deleteProduct.js";
+import EditProduct from "../../core/useCases/editProduct.js";
 
 const router = Router()
 
@@ -49,6 +50,22 @@ router.delete('/:id', async (req, res, next) => {
         res.send()
     }
     catch(err){
+        next(err)
+    }
+})
+
+router.put('/:id', async (req, res, next) => {
+    try {
+        const cu = new EditProduct()
+
+        let body = req.body
+        body.id = req.params.id
+
+        const p = await cu.do(body)
+
+        res.send(p)
+    }
+    catch (err){
         next(err)
     }
 })

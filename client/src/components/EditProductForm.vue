@@ -81,7 +81,7 @@
         axios
           .put(`http://localhost:8010/api/products/${this.productId}`, this.product)
           .then((response) => {
-            this.$emit("closeUpdateModal")
+            this.$emit("closeEditModal")
             this.$emit("reloadDataTable")
             this.$emit("showSuccessAlert")
           })

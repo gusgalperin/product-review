@@ -15,6 +15,7 @@ class ProductSummary {
                 .reduce((a, b) => a + b, 0)
 
             this.stars = starsSum / reviews.length
+            this.ratesCount = reviews.length
         }
     }
 }
