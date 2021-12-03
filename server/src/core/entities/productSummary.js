@@ -1,5 +1,5 @@
 class ProductSummary {
-    constructor(product, reviews) {
+    constructor(product, reviews, users) {
         this.id = product.id
         this.category = product.category
         this.name = product.name
@@ -16,6 +16,12 @@ class ProductSummary {
 
             this.stars = starsSum / reviews.length
             this.ratesCount = reviews.length
+
+            for (let i = 0; i < reviews.length; i++) {
+                reviews[i].userName = users.filter(u => u.id == reviews[i].userId)[0].name
+            }
+
+            this.reviews = reviews
         }
     }
 }

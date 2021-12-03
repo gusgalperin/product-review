@@ -80,7 +80,14 @@
             </template>
             <template #cell(actions)="data">
               <b-row>
-                <b-col cols="4">
+                <b-col cols="3">
+                  <b-icon-box-arrow-in-right
+                      class="action-item"
+                      variant="primary"
+                      @click="productDetail(data.item.id)"
+                  ></b-icon-box-arrow-in-right>
+                </b-col>
+                <b-col cols="3">
                   <b-icon-pencil-square
                     class="action-item"
                     variant="primary"
@@ -274,6 +281,9 @@
       },
       addReview(id) {
         this.$router.push({name: 'Review', params: {productId: id}})
+      },
+      productDetail(id) {
+        this.$router.push({name: 'Detail', params: {productId: id}})
       }
     },
     name: "DataTable"

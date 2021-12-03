@@ -2,9 +2,9 @@ import Router from 'express'
 import GetProductsSummary from "../../core/useCases/getProductsSummary.js";
 import AddProduct from "../../core/useCases/addProduct.js";
 import AddReview from "../../core/useCases/addReview.js";
-import DaoProducts from "../../infra/data/mongodb/daoProducts.js";
 import DeleteProduct from "../../core/useCases/deleteProduct.js";
 import EditProduct from "../../core/useCases/editProduct.js";
+import GetProductDetail from "../../core/useCases/getProductDetail.js";
 
 const router = Router()
 
@@ -34,8 +34,8 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const dao = new DaoProducts()
-        const p = await dao.getOne(req.params.id)
+        const cu = new GetProductDetail()
+        const p = await cu.do({ id: req.params.id })
         res.send(p)
     }
     catch(err){

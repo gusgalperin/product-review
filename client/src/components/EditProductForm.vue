@@ -25,12 +25,13 @@
       </b-col>
       <b-col cols="6">
         <b-form-group id="category" label="Categoria" label-for="category">
-          <b-form-input
-              id="category"
-              type="text"
-              placeholder="Categoria"
-              v-model="product.category"
-          ></b-form-input>
+          <category-list-input name="category" :value="product.category" v-model="product.category"></category-list-input>
+<!--          <b-form-input-->
+<!--              id="category"-->
+<!--              type="text"-->
+<!--              placeholder="Categoria"-->
+<!--              v-model="product.category"-->
+<!--          ></b-form-input>-->
         </b-form-group>
       </b-col>
 
@@ -50,8 +51,12 @@
 
 <script>
   import axios from 'axios'
+  import CategoryListInput from "./CategoryListInput";
   export default {
     name: "EditProductForm",
+    components: {
+      CategoryListInput
+    },
     props: {
       productId: String
     },

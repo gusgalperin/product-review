@@ -3,43 +3,45 @@
 
     <b-row>
       <b-form class="mt-3">
-        <b-row>
+<!--        <b-row>-->
 
-          <b-col cols="4">
-            <b-form-group id="name" label="Nombre" label-for="name">
-              <b-form-input
-                  id="name"
-                  type="text"
-                  placeholder="Nombre"
-                  v-model="product.name"
-                  disabled
-              ></b-form-input>
-            </b-form-group>
-          </b-col>
-          <b-col cols="4">
-            <b-form-group id="brand" label="Marca" label-for="brand">
-              <b-form-input
-                  id="brand"
-                  type="text"
-                  placeholder="Marca"
-                  v-model="product.brand"
-                  disabled
-              ></b-form-input>
-            </b-form-group>
-          </b-col>
-          <b-col cols="4">
-            <b-form-group id="category" label="Categoria" label-for="category">
-              <b-form-input
-                  id="category"
-                  type="text"
-                  placeholder="Categoria"
-                  v-model="product.category"
-                  disabled
-              ></b-form-input>
-            </b-form-group>
-          </b-col>
+<!--          <b-col cols="4">-->
+<!--            <b-form-group id="name" label="Nombre" label-for="name">-->
+<!--              <b-form-input-->
+<!--                  id="name"-->
+<!--                  type="text"-->
+<!--                  placeholder="Nombre"-->
+<!--                  v-model="product.name"-->
+<!--                  disabled-->
+<!--              ></b-form-input>-->
+<!--            </b-form-group>-->
+<!--          </b-col>-->
+<!--          <b-col cols="4">-->
+<!--            <b-form-group id="brand" label="Marca" label-for="brand">-->
+<!--              <b-form-input-->
+<!--                  id="brand"-->
+<!--                  type="text"-->
+<!--                  placeholder="Marca"-->
+<!--                  v-model="product.brand"-->
+<!--                  disabled-->
+<!--              ></b-form-input>-->
+<!--            </b-form-group>-->
+<!--          </b-col>-->
+<!--          <b-col cols="4">-->
+<!--            <b-form-group id="category" label="Categoria" label-for="category">-->
+<!--              <b-form-input-->
+<!--                  id="category"-->
+<!--                  type="text"-->
+<!--                  placeholder="Categoria"-->
+<!--                  v-model="product.category"-->
+<!--                  disabled-->
+<!--              ></b-form-input>-->
+<!--            </b-form-group>-->
+<!--          </b-col>-->
 
-        </b-row>
+<!--        </b-row>-->
+
+        <product-read-only-detail :product="product"></product-read-only-detail>
 
       </b-form>
 
@@ -61,12 +63,7 @@
         <p></p>
         <b-col cols="4">
           <b-form-group id="date" label="Fecha" label-for="date">
-            <b-form-input
-                id="date"
-                type="date"
-                placeholder="Cuando lo compraste"
-                v-model="review.purchaseDate"
-            ></b-form-input>
+            <b-form-datepicker id="date" v-model="review.purchaseDate" class="mb-2"></b-form-datepicker>
           </b-form-group>
         </b-col>
         <p></p>
@@ -112,11 +109,13 @@
 <script>
   import axios from "axios";
   import CurrencyInput from "./CurrencyInput";
+  import ProductReadOnlyDetail from "./ProductReadOnlyDetail";
 
   export default {
     name: "AddProductReviewForm",
     components: {
-      CurrencyInput
+      CurrencyInput,
+      ProductReadOnlyDetail
     },
     props: {
       productId: String
