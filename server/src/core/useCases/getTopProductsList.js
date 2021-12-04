@@ -12,6 +12,7 @@ class GetTopProductsList {
         const summary = (await this.getSummary())
             .filter(s => s.stars > 0)
             .sort((a, b) => b.stars - a.stars)
+            .slice(0, 5)
             .map((s) => { return { name: s.name, brand:s.brand, stars: s.stars } })
 
         let result = []

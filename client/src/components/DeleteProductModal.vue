@@ -26,27 +26,24 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import { mapActions } from 'vuex'
   export default {
     name: "DeleteProductModal",
     props: {
       productId: String
     },
     methods: {
+      ...mapActions({
+        deleteProduct: 'products/deleteProduct'
+      }),
       triggerClose() {
         this.$emit("closeDeleteModal")
       },
-      removeProduct() {
-        axios
-          .delete(`http://localhost:8010/api/products/${this.productId}`)
-          .then(() => {
-            this.$emit("reloadDataTable")
-            this.$emit("showDeleteAlert")
-            this.$emit("closeDeleteModal")
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+      async removeProduct() {
+        await this.deleteProduct(this.productId)
+        this.$emit("reloadDataTable")
+        this.$emit("showDeleteAlert")
+        this.$emit("closeDeleteModal")
       }
     }
   }

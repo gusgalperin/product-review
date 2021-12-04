@@ -115,6 +115,7 @@
       <create-product-form
         @closeCreateModal="closeCreateModal"
         @showSuccessAlert="showAlertCreate"
+        @reloadDataTable="reloadDataTable"
       ></create-product-form>
     </b-modal>
 
@@ -128,6 +129,7 @@
       <edit-product-form
         @closeEditModal="closeEditModal"
         @showSuccessAlert="showAlertUpdate"
+        @reloadDataTable="reloadDataTable"
         :productId="productId"
       ></edit-product-form>
     </b-modal>
@@ -143,6 +145,7 @@
       <delete-product-modal
         @closeDeleteModal="closeDeleteModal"
         @showDeleteAlert="showDeleteSuccessModal"
+        @reloadDataTable="reloadDataTable"
         :productId="productId"
       ></delete-product-modal>
     </b-modal>
@@ -151,7 +154,6 @@
 </template>
 
 <script>
-  import axios from "axios"
   import ProductOverview from "@/components/ProductOverview.vue"
   import CreateProductForm from "@/components/CreateProductForm.vue"
   import EditProductForm from "@/components/EditProductForm.vue"
@@ -222,6 +224,10 @@
       ...mapActions({
         fetchProducts: 'products/fetchProducts'
       }),
+      async reloadDataTable() {
+        await this.fetchProducts()
+        this.setFilterTotalIsActive()
+      },
       showCreateModal(){
         console.log(this.$refs)
         this.$refs["create-product-modal"].show()
@@ -238,6 +244,7 @@
       },
       setFilterTotalIsActive() {
         this.tableHeader = "Todos los Productos"
+        console.log('showing all products')
         this.items = this.products
       },
       setFilterActiveIsActive() {

@@ -3,7 +3,7 @@
     <b-row>
       <bar-chart
           class="chart"
-          :dataSet="data"
+          :dataSet="products"
           :marginLeft="40"
           :marginTop="40"
           :tickCount="5"
@@ -14,7 +14,7 @@
 
 <script>
   import BarChart from "../components/BarChart";
-  import axios from "axios";
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     name: "TopProducts",
     components: {
@@ -25,20 +25,21 @@
         data: []
       }
     },
-    mounted() {
-      this.getTopProducts()
+    created () {
+      document.title = 'top-products';
+    },
+    async mounted() {
+      await this.fetchProducts()
+    },
+    computed: {
+      ...mapGetters({
+        products: 'products/topProducts'
+      })
     },
     methods: {
-      getTopProducts() {
-        axios
-          .get(`http://localhost:8010/api/products/chart/top`)
-          .then((response) => {
-            this.data = response.data
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
+      ...mapActions({
+        fetchProducts: 'products/fetchTopProducts'
+      })
     }
   }
 </script>

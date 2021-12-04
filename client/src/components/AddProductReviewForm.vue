@@ -110,6 +110,7 @@
   import axios from "axios";
   import CurrencyInput from "./CurrencyInput";
   import ProductReadOnlyDetail from "./ProductReadOnlyDetail";
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     name: "AddProductReviewForm",
@@ -132,36 +133,37 @@
     mounted() {
       this.getProductById()
     },
+    computed: {
+      ...mapGetters({
+        productById: 'products/productById'
+      })
+    },
     methods: {
+      ...mapActions({
+        addReview: 'products/addReview'
+      }),
       getProductById() {
-        axios
-          .get(`http://localhost:8010/api/products/${this.productId}`)
-          .then((response) => {
-            this.product = response.data
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        this.product = this.productById(this.productId)
       },
-      addNewReview() {
-        axios
-          .post('http://localhost:8010/api/users/', this.user)
-          .then((response) => {
-            this.user.id = response.data.id
-            this.review.userId = this.user.id
-
-            axios
-              .post(`http://localhost:8010/api/products/${this.productId}/review`, this.review)
-              .then((response) => {
-                this.$router.back()
-              })
-              .catch((err) => {
-                console.log(err)
-              })
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+      async addNewReview() {
+        const createdUser = await axios.post('http://localhost:8010/api/users/', this.user)
+        console.log('user created ' + createdUser.data.id)
+        this.review.userId = createdUser.data.id
+        this.review.productId = this.productId
+        await this.addReview(this.review)
+        this.$router.back()
+          //   axios
+          //     .post(`http://localhost:8010/api/products/${this.productId}/review`, this.review)
+          //     .then((response) => {
+          //
+          //     })
+          //     .catch((err) => {
+          //       console.log(err)
+          //     })
+          // })
+          // .catch((err) => {
+          //   console.log(err)
+          // })
       },
       back() {
         this.$router.back()

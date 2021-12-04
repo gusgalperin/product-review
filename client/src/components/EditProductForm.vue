@@ -5,7 +5,7 @@
 
     <b-row class="mt-4">
       <b-col cols="3">
-        <b-button class="px-5" variant="warning" @click="updateProduct">Editar Producto</b-button>
+        <b-button class="px-5" variant="warning" @click="editProduct">Editar Producto</b-button>
       </b-col>
       <b-col>
         <b-button variant="warning" @click="triggerClose">Cerrar</b-button>
@@ -16,8 +16,10 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import ProductForm from "./ProductForm";
+
+  import { mapGetters, mapActions } from 'vuex'
+
   export default {
     name: "EditProductForm",
     components: {
@@ -34,31 +36,26 @@
     mounted() {
       this.getProductById()
     },
+    computed: {
+      ...mapGetters({
+        productById: 'products/productById'
+      })
+    },
     methods :{
+      ...mapActions({
+        updateProduct: 'products/updateProduct'
+      }),
       triggerClose() {
         this.$emit("closeEditModal");
       },
       getProductById() {
-        axios
-          .get(`http://localhost:8010/api/products/${this.productId}`)
-          .then((response) => {
-            this.product = response.data
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        this.product = this.productById(this.productId)
       },
-      updateProduct() {
-        axios
-          .put(`http://localhost:8010/api/products/${this.productId}`, this.product)
-          .then((response) => {
-            this.$emit("closeEditModal")
-            this.$emit("reloadDataTable")
-            this.$emit("showSuccessAlert")
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+      async editProduct() {
+        await this.updateProduct(this.product)
+        this.$emit("closeEditModal")
+        this.$emit("reloadDataTable")
+        this.$emit("showAlertUpdate")
       }
     }
   }
