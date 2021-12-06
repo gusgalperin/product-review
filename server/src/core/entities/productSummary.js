@@ -1,5 +1,3 @@
-import {Double} from "mongodb";
-
 const starsWeight= {
     5: 252,
     4: 124,
