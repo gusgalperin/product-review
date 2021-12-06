@@ -1,5 +1,6 @@
 <template>
   <vue-bar-graph
+    :textFont="font"
     :width="1200"
     :height="300"
     :show-values="true"
@@ -17,6 +18,11 @@
     },
     props: {
       dataSet: { default: [] },
+    },
+    data(){
+      return {
+        font: "18px"
+      }
     },
     computed: {
       points() {
@@ -38,5 +44,7 @@
 </script>
 
 <style scoped>
-
+  text {
+    font: 90px sans-serif !important;
+  }
 </style>

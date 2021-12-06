@@ -16,8 +16,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ProductForm from "./ProductForm";
+
+import { mapActions } from 'vuex'
+
 export default {
   name: "CreateProductForm",
   components: {
@@ -29,21 +31,17 @@ export default {
     }
   },
   methods:{
+    ...mapActions({
+      addProduct: 'products/addProduct'
+    }),
     triggerClose() {
       this.$emit("closeCreateModal")
     },
-    addNewProduct() {
-      axios
-        .post("http://localhost:8010/api/products", this.product)
-        .then((response) => {
-          console.log(response.data)
-          this.$emit("closeCreateModal")
-          this.$emit("reloadDataTable")
-          this.$emit("showSuccessAlert")
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    async addNewProduct() {
+      await this.addProduct(this.product)
+      this.$emit("closeCreateModal")
+      this.$emit("reloadDataTable")
+      this.$emit("showSuccessAlert")
     }
   }
 }

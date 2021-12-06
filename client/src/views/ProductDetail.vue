@@ -17,7 +17,7 @@
 <script>
   import ProductReadOnlyDetail from "../components/ProductReadOnlyDetail";
   import ProductDetailTable from "../components/ProductDetailTable";
-  import axios from "axios";
+  import {mapGetters} from "vuex";
   export default {
     name: "ProductDetail",
     components: {
@@ -32,19 +32,17 @@
         product: {},
       }
     },
+    computed: {
+      ...mapGetters({
+        productById: 'products/productById'
+      })
+    },
     mounted() {
       this.getProductById()
     },
     methods: {
       getProductById() {
-        axios
-          .get(`http://localhost:8010/api/products/${this.productId}`)
-          .then((response) => {
-            this.product = response.data
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        this.product = this.productById(this.productId)
       },
       back() {
         this.$router.back()
